@@ -103,14 +103,17 @@ indrik-site/
     404.html
     robots.txt
     sitemap.xml
-    favicon.svg                 # Indrik monogram
     assets/
       indrik.css                # shared styles for company pages
+      favicon.svg               # Indrik monogram
+      apple-touch-icon.png
+      indrik-mark*.png          # logo mark (96px, 480px, full size)
     about/index.html
     contact/index.html
     legal/index.html
     platypus/index.html
     powerlog/
+      icon.png                  # PowerLog app icon (also its favicon)
       index.html                # from marketing-site/index.html
       privacy/index.html        # from marketing-site/privacy.html
 ```
