@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .i { fill: #141c22; }
+    .s { fill: #982028; }
+    @media (prefers-color-scheme: dark) { .i { fill: #f6f8f8; } .s { fill: #e5535d; } }
+  </style>
+  <rect class="i" x="22" y="12" width="20" height="40"/>
+  <polygon class="s" points="22,12 34,12 22,27"/>
+</svg>

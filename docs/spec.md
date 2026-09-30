@@ -31,7 +31,7 @@ assumed.
 | Positioning | Product studio: builds and sells its own apps |
 | Language | English only (`<html lang="en">`) |
 | Technology | Static HTML + CSS, no build step, no framework |
-| Company look | Minimal monochrome, separate from PowerLog |
+| Company look | Minimal monochrome plus the logo's red accent, separate from PowerLog |
 | PowerLog look | Unchanged: existing Material 3 green theme |
 | PowerLog location | Path-based: `indrik.eu/powerlog/` |
 | Platypus | Separate venture; short overview page on Indrik linking out |
@@ -247,34 +247,47 @@ PowerLog, and the footer. Served with HTTP status 404.
 
 ## 6. Indrik design (company pages only)
 
-The look is minimal and monochrome: typography and whitespace do the work,
-and there are no accent colours.
+The look is minimal and monochrome, derived from the logo (charcoal, grey,
+off-white) with **one accent: the logo's crimson red**. Typography and
+whitespace do the work. Use the accent sparingly: links, focus rings, the
+hover state, and nothing else. It is not used for large fills or body text.
 
 ### Design tokens (`assets/indrik.css`)
 
 ```css
 :root {
   color-scheme: light dark;
-  --bg: #ffffff;
-  --surface: #f5f5f5;      /* cards */
-  --text: #111111;
-  --text-muted: #555555;   /* 7.5:1 on --bg */
-  --border: #e3e3e3;
-  --badge-bg: #111111;
-  --badge-text: #ffffff;
+  --bg: #f6f8f8;           /* logo's cool off-white */
+  --surface: #ffffff;      /* cards */
+  --text: #141c22;         /* logo charcoal (sampled from the wordmark) */
+  --text-muted: #4f565c;   /* logo grey, ~7:1 on --bg */
+  --border: #dde3e5;
+  --accent: #982028;       /* logo horn red (sampled), ~7:1 on --bg */
+  --accent-strong: #701018; /* logo horn shadow red: hover / pressed */
+  --badge-bg: #141c22;
+  --badge-text: #f6f8f8;
+  --logo-plate: transparent;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0e0e0e;
-    --surface: #1a1a1a;
-    --text: #ededed;
-    --text-muted: #a6a6a6; /* 7.9:1 on --bg */
-    --border: #2a2a2a;
-    --badge-bg: #ededed;
-    --badge-text: #0e0e0e;
+    --bg: #0f1418;
+    --surface: #171e24;
+    --text: #e8ecee;
+    --text-muted: #a3acb2; /* ~7.5:1 on --bg */
+    --border: #27313a;
+    --accent: #e5535d;     /* lightened red for dark mode, ~5:1 on --bg */
+    --accent-strong: #ff7a83;
+    --badge-bg: #e8ecee;
+    --badge-text: #0f1418;
+    --logo-plate: #f6f8f8; /* light tile behind the logo mark, see Logo */
   }
 }
 ```
+
+The neutrals are tinted cool (blue-charcoal) rather than pure grey because
+the logo's charcoal is `#141c22`, not `#111`. The logo's colours, sampled
+from the artwork: charcoal `#141c22`, grey `#535459`, red `#982028`
+(shadow `#701018`), off-white background `#f6f8f8`.
 
 Verify the contrast values when implementing; the requirement is **at
 least 4.5:1** for all text (a project-wide rule, also in `CLAUDE.md`).
@@ -293,11 +306,24 @@ least 4.5:1** for all text (a project-wide rule, also in `CLAUDE.md`).
 
 ### Components
 
-- **Wordmark:** the text "Indrik" set in the heading weight. No logo image
-  needed for launch.
-- **Favicon:** `favicon.svg`, a simple "I" monogram with a
-  `prefers-color-scheme` media query inside the SVG so it stays visible on
-  light and dark browser tabs.
+- **Logo:** the unicorn mark, shown about 32-40px tall in the header next to
+  the text "Indrik" (set in the heading weight). Use the mark only, without
+  the "INDRIK / SOFTWARE STUDIO" lettering, which is unreadable at that size.
+  The full lockup (mark plus lettering) can be used large on About.
+  The mark is a transparent PNG: `assets/indrik-mark-96.png` (header),
+  `indrik-mark-480.png` (About, large) and `indrik-mark.png` (full size).
+  The mane and legs are near-black, so in dark mode they disappear into
+  the page. Solution: in dark mode the mark sits on a light tile
+  (`background: var(--logo-plate)`, ~8px padding, 10px radius). In light
+  mode the plate is transparent. Do not create a recoloured dark variant
+  of the logo.
+  The lettering is not in the file. Set "Indrik" (and "Software Studio" on
+  About) as live text next to the mark.
+- **Favicon:** `favicon.svg`, a simple "I" monogram (the red-slashed "I"
+  from the logo) with a `prefers-color-scheme` media query inside the SVG so
+  it stays visible on light and dark browser tabs. The full unicorn does not
+  read at 16px. Also provide `apple-touch-icon.png` (180 x 180). Both exist
+  in `public/assets/`.
 - **Product card:** `--surface` background, 16px radius, icon + name +
   one-liner + badge + link. The whole card is clickable (one `<a>` wrapping
   the content, or a stretched link), with a visible focus ring.
